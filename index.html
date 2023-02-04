@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Pac-Man Start Page</title>
+    <style>
+      body {
+        background-image: url(paint.png);
+        display: flex;
+        background-repeat: no-repeat;
+        background-size:contain;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+      
+      .pacman {
+        width: 200px;
+        height: 200px;
+        background-color: yellow;
+        border-radius: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        animation: move-pacman 1s infinite;
+        position: relative;
+      }
+      
+      .pacman::after {
+        content: "";
+        width: 50px;
+        height: 50px;
+        background-color: black;
+        border-radius: 25px;
+        position: absolute;
+        bottom: 0;
+        left: 75px;
+      }
+      
+      @keyframes move-pacman {
+        0% { transform: translateX(-100px); }
+        100% { transform: translateX(100px); }
+      }
+      
+      .start-button {
+        width: 300px;
+        height: 100px;
+        font-size: 36px;
+        font-weight: bold;
+        text-align: center;
+        background-color: blue;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="pacman"></div>
+    <div class="start-button" onclick="window.location.href='https://www.example.com/nextpage'">
+      Start
+    </div>
+  </body>
+</html>
