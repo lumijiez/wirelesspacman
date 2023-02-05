@@ -77,6 +77,7 @@ class Ghost {
         if (this.checkWall()) {
             this.teleport();
         }
+      }
     }
 
     checkWall() {
