@@ -41,7 +41,7 @@ let map = [
     [1, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1],
     [0, 0, 0, 0, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1, 2, 1, 0, 0, 0, 0],
     [1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 2, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1],
-    [1, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1],
+    [2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2],
     [1, 1, 1, 1, 1, 2, 1, 2, 1, 2, 2, 2, 1, 2, 1, 2, 1, 1, 1, 1, 1],
     [0, 0, 0, 0, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 0, 0, 0, 0],
     [0, 0, 0, 0, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1, 2, 1, 0, 0, 0, 0],
@@ -91,7 +91,7 @@ let restartPacmanAndGhosts = () => {
 let onGhostCollision = () => {
     lives--;
     restartPacmanAndGhosts();
-    if (lives == 0) {
+    if (lives === 0) {
         lives = 3
         score = 0
         restartPacmanAndGhosts();
@@ -110,7 +110,7 @@ let update = () => {
 let drawFoods = () => {
     for (let i = 0; i < map.length; i++) {
         for (let j = 0; j < map[0].length; j++) {
-            if (map[i][j] == 2) {
+            if (map[i][j] === 2) {
                 createRect(
                     j * oneBlockSize + oneBlockSize / 3,
                     i * oneBlockSize + oneBlockSize / 3,
@@ -167,7 +167,7 @@ let draw = () => {
 let drawWalls = () => {
     for (let i = 0; i < map.length; i++) {
         for (let j = 0; j < map[0].length; j++) {
-            if (map[i][j] == 1) {
+            if (map[i][j] === 1) {
                 createRect(
                     j * oneBlockSize,
                     i * oneBlockSize,
@@ -175,7 +175,7 @@ let drawWalls = () => {
                     oneBlockSize,
                     "#342DCA"
                 );
-                if (j > 0 && map[i][j - 1] == 1) {
+                if (j > 0 && map[i][j - 1] === 1) {
                     createRect(
                         j * oneBlockSize,
                         i * oneBlockSize + wallOffset,
@@ -185,7 +185,7 @@ let drawWalls = () => {
                     );
                 }
 
-                if (j < map[0].length - 1 && map[i][j + 1] == 1) {
+                if (j < map[0].length - 1 && map[i][j + 1] === 1) {
                     createRect(
                         j * oneBlockSize + wallOffset,
                         i * oneBlockSize + wallOffset,
@@ -195,7 +195,7 @@ let drawWalls = () => {
                     );
                 }
 
-                if (i < map.length - 1 && map[i + 1][j] == 1) {
+                if (i < map.length - 1 && map[i + 1][j] === 1) {
                     createRect(
                         j * oneBlockSize + wallOffset,
                         i * oneBlockSize + wallOffset,
@@ -205,7 +205,7 @@ let drawWalls = () => {
                     );
                 }
 
-                if (i > 0 && map[i - 1][j] == 1) {
+                if (i > 0 && map[i - 1][j] === 1) {
                     createRect(
                         j * oneBlockSize + wallOffset,
                         i * oneBlockSize,
@@ -223,8 +223,8 @@ let createGhosts = () => {
     ghosts = [];
     for (let i = 0; i < ghostCount * 2; i++) {
         let newGhost = new Ghost(
-            9 * oneBlockSize + (i % 2 == 0 ? 0 : 1) * oneBlockSize,
-            10 * oneBlockSize + (i % 2 == 0 ? 0 : 1) * oneBlockSize,
+            9 * oneBlockSize + (i % 2 === 0 ? 0 : 1) * oneBlockSize,
+            10 * oneBlockSize + (i % 2 === 0 ? 0 : 1) * oneBlockSize,
             oneBlockSize,
             oneBlockSize,
             pacman.speed / 2,
@@ -273,4 +273,28 @@ setInterval(() => {
         }, 1);
       });
   }, 1);
+
+
+document.addEventListener("keydown", (event) => {
+    switch (event.code) {
+        case "KeyW" :
+        case "Keyw" :
+            pacman.nextDirection = DIRECTION_UP;
+            break;
+        case "KeyA" :
+        case "Keya" :
+            pacman.nextDirection = DIRECTION_LEFT;
+            break;
+        case "KeyS" :
+        case "Keys" :
+            pacman.nextDirection = DIRECTION_BOTTOM;
+            break;
+        case "KeyD" :
+        case "Keyd" :
+            pacman.nextDirection = DIRECTION_RIGHT;
+            break;
+        default :
+            console.log("Something wrong!");
+    }
+});
 

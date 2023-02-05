@@ -19,7 +19,22 @@ class Pacman {
         this.moveForwards();
         if (this.checkCollisions()) {
             this.moveBackwards();
-            return;
+        }
+        if (this.checkWall()) {
+            this.teleport();
+        }
+    }
+
+    checkWall() {
+        return parseInt(this.x / oneBlockSize) === map[0].length ||
+            parseInt(this.x / oneBlockSize) === -1;
+    }
+
+    teleport() {
+        if (this.direction === DIRECTION_RIGHT) {
+            this.x = 0;
+        } else if (this.direction === DIRECTION_LEFT) {
+            this.x = (map[0].length - 1) * oneBlockSize;
         }
     }
 
@@ -27,9 +42,9 @@ class Pacman {
         for (let i = 0; i < map.length; i++) {
             for (let j = 0; j < map[0].length; j++) {
                 if (
-                    map[i][j] == 2 &&
-                    this.getMapX() == j &&
-                    this.getMapY() == i
+                    map[i][j] === 2 &&
+                    this.getMapX() === j &&
+                    this.getMapY() === i
                 ) {
                     map[i][j] = 3;
                     score++;
@@ -77,16 +92,16 @@ class Pacman {
         if (
             map[parseInt(this.y / oneBlockSize)][
                 parseInt(this.x / oneBlockSize)
-            ] == 1 ||
+            ] === 1 ||
             map[parseInt(this.y / oneBlockSize + 0.9999)][
                 parseInt(this.x / oneBlockSize)
-            ] == 1 ||
+            ] === 1 ||
             map[parseInt(this.y / oneBlockSize)][
                 parseInt(this.x / oneBlockSize + 0.9999)
-            ] == 1 ||
+            ] === 1 ||
             map[parseInt(this.y / oneBlockSize + 0.9999)][
                 parseInt(this.x / oneBlockSize + 0.9999)
-            ] == 1
+            ] === 1
         ) {
             isCollided = true;
         }
@@ -97,8 +112,8 @@ class Pacman {
         for (let i = 0; i < ghosts.length; i++) {
             let ghost = ghosts[i];
             if (
-                ghost.getMapX() == this.getMapX() &&
-                ghost.getMapY() == this.getMapY()
+                ghost.getMapX() === this.getMapX() &&
+                ghost.getMapY() === this.getMapY()
             ) {
                 return true;
             }
@@ -107,7 +122,7 @@ class Pacman {
     }
 
     changeDirectionIfPossible() {
-        if (this.direction == this.nextDirection) return;
+        if (this.direction === this.nextDirection) return;
         let tempDirection = this.direction;
         this.direction = this.nextDirection;
         this.moveForwards();
