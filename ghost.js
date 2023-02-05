@@ -73,10 +73,25 @@ class Ghost {
         this.moveForwards();
         if (this.checkCollisions()) {
             this.moveBackwards();
-            return;
+        }
+        if (this.checkWall()) {
+            this.teleport();
         }
     }
+
+    checkWall() {
+        return parseInt(this.x / oneBlockSize) === map[0].length ||
+            parseInt(this.x / oneBlockSize) === -1;
     }
+
+    teleport() {
+        if (this.direction === DIRECTION_RIGHT) {
+            this.x = 0;
+        } else if (this.direction === DIRECTION_LEFT) {
+            this.x = (map[0].length - 1) * oneBlockSize;
+        }
+    }
+
     moveBackwards() {
         switch (this.direction) {
             case 4: 

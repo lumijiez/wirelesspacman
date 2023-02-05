@@ -30,7 +30,7 @@ let wallSpaceWidth = oneBlockSize / 1.6;
 let wallOffset = (oneBlockSize - wallSpaceWidth) / 2;
 let wallInnerColor = "black";
 
-let map = [
+const initialMap = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1],
     [1, 2, 1, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1, 1, 1, 2, 1],
@@ -56,9 +56,20 @@ let map = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 ];
 
+let map = deepCloneMatrix(initialMap);
+
+function deepCloneMatrix(matrix) {
+    return matrix.map(row => row.map(element => element));
+}
+
+let refreshAfterDeath = () => {
+    restartPacmanAndGhosts();
+    map = deepCloneMatrix(initialMap);
+}
+
 let randomTargetsForGhosts = [
-    { x: 1 * oneBlockSize, y: 1 * oneBlockSize },
-    { x: 1 * oneBlockSize, y: (map.length - 2) * oneBlockSize },
+    { x: oneBlockSize, y: oneBlockSize },
+    { x: oneBlockSize, y: (map.length - 2) * oneBlockSize },
     { x: (map[0].length - 2) * oneBlockSize, y: oneBlockSize },
     {
         x: (map[0].length - 2) * oneBlockSize,
@@ -94,7 +105,8 @@ let onGhostCollision = () => {
     if (lives === 0) {
         lives = 3
         score = 0
-        restartPacmanAndGhosts();
+        refreshAfterDeath();
+        drawFoods();
     }
 };
 

@@ -55,16 +55,16 @@ class GhostMultiplayer {
 
     moveBackwards() {
         switch (this.direction) {
-            case 4: 
+            case 4:
                 this.x -= this.speed;
                 break;
-            case 3: 
+            case 3:
                 this.y += this.speed;
                 break;
-            case 2: 
+            case 2:
                 this.x += this.speed;
                 break;
-            case 1: 
+            case 1:
                 this.y -= this.speed;
                 break;
         }
@@ -105,6 +105,7 @@ class GhostMultiplayer {
         }
         return isCollided;
     }
+
     changeDirectionIfPossible() {
         let tempDirection = this.direction;
         this.direction = this.calculateNewDirection(
@@ -138,6 +139,7 @@ class GhostMultiplayer {
         }
         console.log(this.direction);
     }
+
     calculateNewDirection(map, destX, destY) {
         let mp = [];
         for (let i = 0; i < map.length; i++) {
@@ -167,6 +169,7 @@ class GhostMultiplayer {
         }
         return 1;
     }
+
     addNeighbors(poped, mp) {
         let queue = [];
         let numOfRows = mp.length;
@@ -188,7 +191,7 @@ class GhostMultiplayer {
         ) {
             let tempMoves = poped.moves.slice();
             tempMoves.push(DIRECTION_RIGHT);
-            queue.push({ x: poped.x + 1, y: poped.y, moves: tempMoves });
+            queue.push({x: poped.x + 1, y: poped.y, moves: tempMoves});
         }
         if (
             poped.y - 1 >= 0 &&
@@ -235,6 +238,7 @@ class GhostMultiplayer {
         this.currentFrame =
             this.currentFrame == this.frameCount ? 1 : this.currentFrame + 1;
     }
+
     draw() {
         canvasContext.save();
         canvasContext.drawImage(
