@@ -95,6 +95,7 @@ let onGhostCollision = () => {
         lives = 3
         score = 0
         restartPacmanAndGhosts();
+        drawFoods();
     }
 };
 

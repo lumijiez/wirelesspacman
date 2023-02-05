@@ -32,77 +32,80 @@ class GhostMultiplayer {
     moveProcess() {
         setInterval(() => {
             fetch("http://localhost:3000/send_enemydata")
-              .then((res) => res.json())
-              .then((data) => {
-                setTimeout(() => {
-                if (data.yDir != undefined || data.xDir != undefined) {
-                    if (data.yDir == 0 && data.xDir == -1) {
-                        this.direction = DIRECTION_LEFT;
-                    } else if (data.yDir == 1 && data.xDir == 0) {
-                        this.direction = DIRECTION_UP;
-                    } else if (data.yDir == 0 && data.xDir == 1) {
-                        this.direction = DIRECTION_RIGHT;
-                    } else if (data.yDir == -1 && data.xDir == 0) {
-                        this.direction = DIRECTION_BOTTOM;
-                    }
-                }
-                }, 1);
-              });
-          }, 1);
+                .then((res) => res.json())
+                .then((data) => {
+                    setTimeout(() => {
+                        if (data.yDir != undefined || data.xDir != undefined) {
+                            if (data.yDir == 0 && data.xDir == -1) {
+                                this.direction = DIRECTION_LEFT;
+                            } else if (data.yDir == 1 && data.xDir == 0) {
+                                this.direction = DIRECTION_UP;
+                            } else if (data.yDir == 0 && data.xDir == 1) {
+                                this.direction = DIRECTION_RIGHT;
+                            } else if (data.yDir == -1 && data.xDir == 0) {
+                                this.direction = DIRECTION_BOTTOM;
+                            }
+                        }
+                    }, 1);
+                });
+        }, 1);
     }
 
     moveBackwards() {
         switch (this.direction) {
-            case 4: 
+            case 4:
                 this.x -= this.speed;
                 break;
-            case 3: 
+            case 3:
                 this.y += this.speed;
                 break;
-            case 2: 
+            case 2:
                 this.x += this.speed;
                 break;
-            case 1: 
+            case 1:
                 this.y -= this.speed;
                 break;
         }
     }
+
     moveForwards() {
         switch (this.direction) {
-            case 4: 
+            case 4:
                 this.x += this.speed;
                 break;
-            case 3: 
+            case 3:
                 this.y -= this.speed;
                 break;
-            case 2: 
+            case 2:
                 this.x -= this.speed;
                 break;
-            case 1: 
+            case 1:
                 this.y += this.speed;
                 break;
         }
     }
+
     checkCollisions() {
         let isCollided = false;
         if (
             map[parseInt(this.y / oneBlockSize)][
                 parseInt(this.x / oneBlockSize)
-            ] == 1 ||
+                ] == 1 ||
             map[parseInt(this.y / oneBlockSize + 0.9999)][
                 parseInt(this.x / oneBlockSize)
-            ] == 1 ||
+                ] == 1 ||
             map[parseInt(this.y / oneBlockSize)][
                 parseInt(this.x / oneBlockSize + 0.9999)
-            ] == 1 ||
+                ] == 1 ||
             map[parseInt(this.y / oneBlockSize + 0.9999)][
                 parseInt(this.x / oneBlockSize + 0.9999)
-            ] == 1
+                ] == 1
         ) {
             isCollided = true;
         }
         return isCollided;
     }
+
     changeDirectionIfPossible() {
         let tempDirection = this.direction;
         this.direction = this.calculateNewDirection(
@@ -136,6 +139,7 @@ class GhostMultiplayer {
         }
         console.log(this.direction);
     }
+
     calculateNewDirection(map, destX, destY) {
         let mp = [];
         for (let i = 0; i < map.length; i++) {
@@ -165,6 +169,7 @@ class GhostMultiplayer {
         }
         return 1;
     }
+
     addNeighbors(poped, mp) {
         let queue = [];
         let numOfRows = mp.length;
@@ -177,7 +182,7 @@ class GhostMultiplayer {
         ) {
             let tempMoves = poped.moves.slice();
             tempMoves.push(DIRECTION_LEFT);
-            queue.push({ x: poped.x - 1, y: poped.y, moves: tempMoves });
+            queue.push({x: poped.x - 1, y: poped.y, moves: tempMoves});
         }
         if (
             poped.x + 1 >= 0 &&
@@ -186,7 +191,7 @@ class GhostMultiplayer {
         ) {
             let tempMoves = poped.moves.slice();
             tempMoves.push(DIRECTION_RIGHT);
-            queue.push({ x: poped.x + 1, y: poped.y, moves: tempMoves });
+            queue.push({x: poped.x + 1, y: poped.y, moves: tempMoves});
         }
         if (
             poped.y - 1 >= 0 &&
@@ -195,7 +200,7 @@ class GhostMultiplayer {
         ) {
             let tempMoves = poped.moves.slice();
             tempMoves.push(DIRECTION_UP);
-            queue.push({ x: poped.x, y: poped.y - 1, moves: tempMoves });
+            queue.push({x: poped.x, y: poped.y - 1, moves: tempMoves});
         }
         if (
             poped.y + 1 >= 0 &&
@@ -204,7 +209,7 @@ class GhostMultiplayer {
         ) {
             let tempMoves = poped.moves.slice();
             tempMoves.push(DIRECTION_BOTTOM);
-            queue.push({ x: poped.x, y: poped.y + 1, moves: tempMoves });
+            queue.push({x: poped.x, y: poped.y + 1, moves: tempMoves});
         }
         return queue;
     }
@@ -233,6 +238,7 @@ class GhostMultiplayer {
         this.currentFrame =
             this.currentFrame == this.frameCount ? 1 : this.currentFrame + 1;
     }
+
     draw() {
         canvasContext.save();
         canvasContext.drawImage(
@@ -250,13 +256,3 @@ class GhostMultiplayer {
         canvasContext.beginPath();
     }
 }
-let updateGhosts = () => {
-    for (let i = 0; i < ghosts.length; i++) {
-        ghosts[i].moveProcess();
-    }
-};
-let drawGhosts = () => {
-    for (let i = 0; i < ghosts.length; i++) {
-        ghosts[i].draw();
-    }
-};
