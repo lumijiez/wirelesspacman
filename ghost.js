@@ -90,16 +90,16 @@ class Ghost {
         if (
             map[parseInt(this.y / oneBlockSize)][
                 parseInt(this.x / oneBlockSize)
-            ] == 1 ||
+            ] === 1 ||
             map[parseInt(this.y / oneBlockSize + 0.9999)][
                 parseInt(this.x / oneBlockSize)
-            ] == 1 ||
+            ] === 1 ||
             map[parseInt(this.y / oneBlockSize)][
                 parseInt(this.x / oneBlockSize + 0.9999)
-            ] == 1 ||
+            ] === 1 ||
             map[parseInt(this.y / oneBlockSize + 0.9999)][
                 parseInt(this.x / oneBlockSize + 0.9999)
-            ] == 1
+            ] === 1
         ) {
             isCollided = true;
         }
@@ -117,15 +117,15 @@ class Ghost {
             return;
         }
         if (
-            this.getMapY() != this.getMapYRightSide() &&
-            (this.direction == DIRECTION_LEFT ||
-                this.direction == DIRECTION_RIGHT)
+            this.getMapY() !== this.getMapYRightSide() &&
+            (this.direction === DIRECTION_LEFT ||
+                this.direction === DIRECTION_RIGHT)
         ) {
             this.direction = DIRECTION_UP;
         }
         if (
-            this.getMapX() != this.getMapXRightSide() &&
-            this.direction == DIRECTION_UP
+            this.getMapX() !== this.getMapXRightSide() &&
+            this.direction === DIRECTION_UP
         ) {
             this.direction = DIRECTION_LEFT;
         }
@@ -155,7 +155,7 @@ class Ghost {
         ];
         while (queue.length > 0) {
             let poped = queue.shift();
-            if (poped.x == destX && poped.y == destY) {
+            if (poped.x === destX && poped.y === destY) {
                 return poped.moves[0];
             } else {
                 mp[poped.y][poped.x] = 1;
@@ -175,7 +175,7 @@ class Ghost {
         if (
             poped.x - 1 >= 0 &&
             poped.x - 1 < numOfRows &&
-            mp[poped.y][poped.x - 1] != 1
+            mp[poped.y][poped.x - 1] !== 1
         ) {
             let tempMoves = poped.moves.slice();
             tempMoves.push(DIRECTION_LEFT);
@@ -184,7 +184,7 @@ class Ghost {
         if (
             poped.x + 1 >= 0 &&
             poped.x + 1 < numOfRows &&
-            mp[poped.y][poped.x + 1] != 1
+            mp[poped.y][poped.x + 1] !== 1
         ) {
             let tempMoves = poped.moves.slice();
             tempMoves.push(DIRECTION_RIGHT);
@@ -193,7 +193,7 @@ class Ghost {
         if (
             poped.y - 1 >= 0 &&
             poped.y - 1 < numOfColumns &&
-            mp[poped.y - 1][poped.x] != 1
+            mp[poped.y - 1][poped.x] !== 1
         ) {
             let tempMoves = poped.moves.slice();
             tempMoves.push(DIRECTION_UP);
@@ -202,7 +202,7 @@ class Ghost {
         if (
             poped.y + 1 >= 0 &&
             poped.y + 1 < numOfColumns &&
-            mp[poped.y + 1][poped.x] != 1
+            mp[poped.y + 1][poped.x] !== 1
         ) {
             let tempMoves = poped.moves.slice();
             tempMoves.push(DIRECTION_BOTTOM);
@@ -233,7 +233,7 @@ class Ghost {
 
     changeAnimation() {
         this.currentFrame =
-            this.currentFrame == this.frameCount ? 1 : this.currentFrame + 1;
+            this.currentFrame === this.frameCount ? 1 : this.currentFrame + 1;
     }
     draw() {
         canvasContext.save();
