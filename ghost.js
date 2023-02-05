@@ -18,7 +18,7 @@ class Ghost {
         this.width = width;
         this.height = height;
         this.speed = speed;
-        this.direction = DIRECTION_DOWN;
+        this.direction = DIRECTION_BOTTOM;
         this.imageX = imageX;
         this.imageY = imageY;
         this.imageHeight = imageHeight;
