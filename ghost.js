@@ -31,13 +31,9 @@ class Ghost {
     isInRange() {
         let xDistance = Math.abs(pacman.getMapX() - this.getMapX());
         let yDistance = Math.abs(pacman.getMapY() - this.getMapY());
-        if (
-            Math.sqrt(xDistance * xDistance + yDistance * yDistance) <=
-            this.range
-        ) {
-            return true;
-        }
-        return false;
+        return Math.sqrt(xDistance * xDistance + yDistance * yDistance) <=
+            this.range;
+
     }
     changeRandomDirection() {
         let addition = 1;
