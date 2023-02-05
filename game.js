@@ -236,6 +236,20 @@ let createGhosts = () => {
         );
         ghosts.push(newGhost);
     }
+
+    // let mpGhost = new GhostMultiplayer(
+    //     9 * oneBlockSize + (i % 2 == 0 ? 0 : 1) * oneBlockSize,
+    //     10 * oneBlockSize + (i % 2 == 0 ? 0 : 1) * oneBlockSize,
+    //     oneBlockSize,
+    //     oneBlockSize,
+    //     pacman.speed / 2,
+    //     ghostImageLocations[i % 4].x,
+    //     ghostImageLocations[i % 4].y,
+    //     124,
+    //     116,
+    //     6 + i
+    // );
+    //     ghosts.push(mpGhost)
 };
 
 createNewPacman();
@@ -247,13 +261,13 @@ setInterval(() => {
       .then((res) => res.json())
       .then((data) => {
         setTimeout(() => {
-            if (data.joystickY == 0 && data.joystickX == -1) {
+            if (data.joystickY === 0 && data.joystickX === -1) {
                 pacman.nextDirection = DIRECTION_LEFT;
-            } else if (data.joystickY == 1 && data.joystickX == 0) {
+            } else if (data.joystickY === 1 && data.joystickX === 0) {
                 pacman.nextDirection = DIRECTION_UP;
-            } else if (data.joystickY == 0 && data.joystickX == 1) {
+            } else if (data.joystickY === 0 && data.joystickX === 1) {
                 pacman.nextDirection = DIRECTION_RIGHT;
-            } else if (data.joystickY == -1 && data.joystickX == 0) {
+            } else if (data.joystickY === -1 && data.joystickX === 0) {
                 pacman.nextDirection = DIRECTION_BOTTOM;
             }
         }, 1);
