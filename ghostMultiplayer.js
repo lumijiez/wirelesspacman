@@ -30,25 +30,27 @@ class GhostMultiplayer {
     }
 
     moveProcess() {
-        setInterval(() => {
-            fetch("http://localhost:3000/send_enemydata")
+            fetch("http://192.168.1.25:3000/send_enemydata")
               .then((res) => res.json())
               .then((data) => {
                 setTimeout(() => {
-                if (data.yDir != undefined || data.xDir != undefined) {
-                    if (data.yDir == 0 && data.xDir == -1) {
+                    if (data.joystickY === 0 && data.joystickX === -1) {
                         this.direction = DIRECTION_LEFT;
-                    } else if (data.yDir == 1 && data.xDir == 0) {
+                    } else if (data.joystickY === 1 && data.joystickX === 0) {
                         this.direction = DIRECTION_UP;
-                    } else if (data.yDir == 0 && data.xDir == 1) {
+                    } else if (data.joystickY === 0 && data.joystickX === 1) {
                         this.direction = DIRECTION_RIGHT;
-                    } else if (data.yDir == -1 && data.xDir == 0) {
+                    } else if (data.joystickY === -1 && data.joystickX === 0) {
                         this.direction = DIRECTION_BOTTOM;
                     }
-                }
                 }, 1);
               });
-          }, 1);
+        this.changeDirectionIfPossible();
+        this.moveForwards();
+        if (this.checkCollisions()) {
+            this.moveBackwards();
+            return;
+        }
     }
 
     moveBackwards() {

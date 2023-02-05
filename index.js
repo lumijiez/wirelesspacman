@@ -5,23 +5,24 @@ const child_process = require("child_process")
 app.use(cors())
 app.use(express.json())
 var data;
-var enemyData;
+var enemyData = {
+  joystickX: 0,
+  joystickY: 0
+};
 app.use(express.static("./"))
 
 app.post("/get_enemydata", (req, res) => {
     enemyData = req.body
-    res.json()
+    console.log(enemyData)
+    res.send("Good")
 })
 
 app.post("/api/data", (req, res) => {
-  //console.clear()
-  //console.log(data)
   data = req.body
   res.send("good")
 });
 
 app.get("/get_data", (req, res) => {
-    console.log(data)
     res.json(data)
 })
 

@@ -1,5 +1,6 @@
 class Ghost {
     constructor(
+        id,
         x,
         y,
         width,
@@ -11,12 +12,13 @@ class Ghost {
         imageHeight,
         range
     ) {
+        this.id = id;
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         this.speed = speed;
-        this.direction = DIRECTION_RIGHT;
+        this.direction = DIRECTION_UP;
         this.imageX = imageX;
         this.imageY = imageY;
         this.imageHeight = imageHeight;
@@ -41,6 +43,27 @@ class Ghost {
         this.randomTargetIndex = this.randomTargetIndex % 4;
     }
     moveProcess() {
+        if (this.id == 0) {
+                fetch("http://192.168.1.25:3000/send_enemydata")
+                  .then((res) => res.json())
+                  .then((data) => {
+                        if (data.joystickY === 0 && data.joystickX === -1) {
+                            this.direction = DIRECTION_LEFT;
+                        } else if (data.joystickY === 1 && data.joystickX === 0) {
+                            this.direction = DIRECTION_UP;
+                        } else if (data.joystickY === 0 && data.joystickX === 1) {
+                            this.direction = DIRECTION_RIGHT;
+                        } else if (data.joystickY === -1 && data.joystickX === 0) {
+                            this.direction = DIRECTION_BOTTOM;
+                        }
+                  });
+            this.moveForwards();
+            if (this.checkCollisions()) {
+                this.moveBackwards();
+                return;
+            }
+        }
+        else {
         if (this.isInRange()) {
             this.target = pacman;
         } else {
@@ -52,6 +75,7 @@ class Ghost {
             this.moveBackwards();
             return;
         }
+    }
     }
     moveBackwards() {
         switch (this.direction) {

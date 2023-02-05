@@ -3,14 +3,14 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.2/axios.min.js"></script>
       <script>
          function sendData(x, y) {
-         fetch('http://localhost:3000/get_enemydata', {
+         fetch('http://192.168.1.25:3000/get_enemydata', {
          method: 'POST',
          headers: {
          'Content-Type': 'application/json'
          },
          body: JSON.stringify({
-         "xDirection": x,
-         "yDirection": y
+         "joystickX": x,
+         "joystickY": y
          })
          })
          .then(response => response.json())
