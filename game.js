@@ -260,3 +260,27 @@ setInterval(() => {
       });
   }, 1);
 
+
+document.addEventListener("keydown", (event) => {
+    switch (event.code) {
+        case "KeyW" :
+        case "Keyw" :
+            pacman.nextDirection = DIRECTION_UP;
+            break;
+        case "KeyA" :
+        case "Keya" :
+            pacman.nextDirection = DIRECTION_LEFT;
+            break;
+        case "KeyS" :
+        case "Keys" :
+            pacman.nextDirection = DIRECTION_BOTTOM;
+            break;
+        case "KeyD" :
+        case "Keyd" :
+            pacman.nextDirection = DIRECTION_RIGHT;
+            break;
+        default :
+            console.log("Something wrong!");
+    }
+});
+
